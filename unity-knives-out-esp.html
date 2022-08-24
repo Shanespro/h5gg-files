@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ayDraw</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+body {
+    background: transparent;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+*:not(input, checkbox, textarea) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Non-prefixed version, currently */
+}
+
+.popup_container {
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    top: 0;
+}
+
+#H5AlertView {
+    width: 220px;
+    height: 300px;
+    position: absolute;
+    left: -110px;
+    top: 150px;
+    text-align: center;
+    zoom: 0.8;
+}
+
+#title-text {
+    padding-top: 0px;
+    font-size: 18px;
+    color: #494949;
+}
+
+#info-text {
+    padding: 10px;
+    color: #494949;
+}
+
+#content-view {
+    z-index: 0;
+    background: #fff;
+    position: relative;
+    top: 0px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    color: #fff;
+    background-color: #23B574;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    padding: 0 8px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+button:active {
+    background-color: #007E40;
+    transform: translateY(2px);
+}
+</style>
+</head>
+
+<body>
+<div class="popup_container">
+<div id="H5AlertView">
+<script>
+function draw(fps) {
+    window.draw_state = 1;
+    alert("开始绘制");
+}
+
+function unDraw() {
+    clearCtx();
+    window.draw_state = 0;
+    setTimeout(function(){alert("关闭")},100);
+}
+
+function sch(){
+	window.draw_state = 0;
+	aacc.lenght = 0;
+	j = 0;
+	h5gg.clearResults();
+	h5gg.searchNumber('4453159313495556096','I64', '0x100000000', '0x180000000');
+
+//ここで全プレイヤー座標取得
+
+	var shuliang = h5gg.getResultsCount(); 
+	var jieguo = h5gg.getResults(shuliang); 
+	for(i = 0;i<shuliang;i++){
+		aacc[j]=(jieguo[i].address);
+		j++;
+	}
+	window.draw_state = 1;
+	h5gg.clearResults();
+}
+function swpd(){
+if (ahjsg == 'tr'){
+		ahjsg = 'fl';
+	}else{
+		ahjsg = 'tr';
+	}
+}
+</script>
+<div id="content-view">
+<div id="title-text">Knives Out ESP</div>
+<div id="info-text">QQ:1955765476</div>
+<div>
+    <button onclick="draw()">ON</button>
+    <button onclick="unDraw()">OFF</button>
+    <button onclick="swpd()">Show people in the car（bug）</button>
+	<button onclick="sch()">Research</button>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script>
+var pingmux = window.screen.height; 
+var pingmuy = window.screen.width; 
+pingmux = pingmux / 2;
+pingmuy = pingmuy / 2;
+var kgaa = 0;
+var ahjsg = 'fl';
+var zszbx = 0;
+var zszby = 0;
+var zszbz = 0;
+var aasddd = 0;
+h5gg.clearResults();
+var rwjz = new Array();
+rwjz[0] = new Array();
+rwjz[1] = new Array();
+rwjz[2] = new Array();
+rwjz[3] = new Array();
+var fkleft = 0;
+var fktop = 0;
+var fkright = 0;
+var fkbottom = 0;
+var aacc2={};
+var aacc={};
+var xjz1 = parseFloat(0.0);
+var xjx0 = parseFloat(0.0);
+var xjy0 = parseFloat(0.0);
+var xjx1 = parseFloat(0.0);
+var xjy1 = parseFloat(0.0);
+var fkleft = 0;
+var fkright = 0;
+var fktop = 0;
+var fkbottom = 0;
+var ddss = 0;
+var xjyjg2 = 0;
+
+
+
+
+if(kgaa == 0){
+
+	h5gg.clearResults();
+	var j=0;
+	var k=0;
+	h5gg.searchNumber('5171064759130259456','I64', '0x100000000', '0x180000000');
+	var shuliang2 = h5gg.getResultsCount();
+	var jieguo2 = h5gg.getResults(shuliang2);
+
+	for(i = 0;i<shuliang2;i++){
+		if(h5gg.getValue(jieguo2[i].address - 4,'I32')==1114636288){
+			aacc2[k]=(jieguo2[i].address - 296);
+alert(aacc2[k]=(jieguo2[i].address - 296))
+			k++;
+		}
+	}
+	if(k == 0){
+	alert('Failed to get data，Restart the game')
+	}
+	h5gg.clearResults();
+	h5gg.searchNumber('4453159313495556096','I64', '0x100000000', '0x180000000');
+	var shuliang = h5gg.getResultsCount(); 
+	var jieguo = h5gg.getResults(shuliang); 
+	for(i = 0;i<shuliang;i++){ 
+		aacc[j]=(jieguo[i].address);
+		j++;
+	}
+	h5gg.clearResults();
+	kg = 1;
+}
+//激活webkit的button:active
+document.body.addEventListener('touchstart', function () {});
+    
+
+var sWidth = window.screen.width; 
+var sHeight = window.screen.height; 
+
+if (window.screen.availWidth > window.screen.availHeight) {
+    sWidth = window.screen.height;
+    sHeight = window.screen.width;
+}
+setWindowRect(0, 0, window.screen.height, window.screen.width);
+
+setButtonAction(function(){
+        
+     var menu = document.querySelector("#H5AlertView");
+     if(menu.style.display=='none') {
+         menu.style.display='block';
+         setWindowTouch(true);
+     } else {
+         menu.style.display='none';
+         setWindowTouch(false);
+     }
+});//*/
+
+var iosScale = window.devicePixelRatio;
+
+var canvasDom = document.createElement("canvas");
+canvasDom.style.height = "100%";
+canvasDom.style.width = "100%";
+canvasDom.width = sWidth * iosScale;
+canvasDom.height = sHeight * iosScale;
+document.body.appendChild(canvasDom);
+var ctx = canvasDom.getContext('2d');
+setLineWidth(iosScale);
+var fontFamily = " Arial";
+
+var cacheTimer = null;
+var drawTimer = null;
+var actorCache = []; 
+
+var baseAddr = Number(h5gg.getRangesList(0)[0].start); 
+var GWorld = 0; 
+var drx = 0;
+var dry = 0;
+var drz = 0;
+function shadowDraw() {
+	clearCtx();
+	rwjz[0][0] = h5gg.getValue(Number(aacc2[0]),'F32');
+	rwjz[0][1] = h5gg.getValue(Number(aacc2[0]) + 4,'F32');
+	rwjz[0][2] = h5gg.getValue(Number(aacc2[0]) + 8,'F32');
+	rwjz[0][3] = h5gg.getValue(Number(aacc2[0]) + 12,'F32');
+	rwjz[1][0] = h5gg.getValue(Number(aacc2[0]) + 16,'F32');
+	rwjz[1][1] = h5gg.getValue(Number(aacc2[0]) + 20,'F32');
+	rwjz[1][2] = h5gg.getValue(Number(aacc2[0]) + 24,'F32');
+	rwjz[1][3] = h5gg.getValue(Number(aacc2[0]) + 28,'F32');
+	rwjz[3][0] = h5gg.getValue(Number(aacc2[0]) + 48,'F32');
+	rwjz[3][1] = h5gg.getValue(Number(aacc2[0]) + 52,'F32');
+	rwjz[3][2] = h5gg.getValue(Number(aacc2[0]) + 56,'F32');
+	rwjz[3][3] = h5gg.getValue(Number(aacc2[0]) + 60,'F32');
+	for(i = 0;i<j;i++){
+		drx = h5gg.getValue(aacc[i] - 12,'I32');//人物X
+		if (drx != 0){
+			if (drx != 1061997773){
+				if (drx != 1065353216){
+					drx = h5gg.getValue(aacc[i] - 12,'F32');//人物X
+					dry = h5gg.getValue(aacc[i] - 8,'F32');//人物Y
+					drz = h5gg.getValue(aacc[i] - 4,'F32');//人物Z
+					if (h5gg.getValue(Number(aacc[i]) - 32,'I32') == 1){
+						var view = rwjz[3][0] * drx + Number(rwjz[3][1]) * dry + Number(rwjz[3][2]) * drz + Number(rwjz[3][3]);
+						if(view >= 0.01){
+							view = 1 / view;
+							xjx0 = Number(rwjz[0][0]) * drx + Number(rwjz[0][2]) * drz + Number(rwjz[0][3]);
+							xjy0 = Number(rwjz[1][0]) * drx + Number(rwjz [1][1]) * (Number(dry) + 1.8) + Number(rwjz[1][2]) * drz + Number(rwjz[1][3]);
+							xjy1 = Number(rwjz[1][0]) * drx + Number(rwjz [1][1]) * (dry - 0.1) + Number(rwjz[1][2]) * drz + Number(rwjz[1][3]);
+							xjx0 = xjx0 * view;
+							xjy0 = xjy0 * view;
+							xjy1 = xjy1 * view;
+							xjx0 = pingmux + Number(xjx0) * pingmux + 0.5;
+							xjy0 = pingmuy - Number(xjy0) * pingmuy - 0.5;
+							xjy1 = pingmuy - Number(xjy1) * pingmuy - 0.5;
+							xjyjg2 = xjy1 - xjy0;
+							ddss = xjyjg2 / 4;
+							fkleft = xjx0 - ddss;
+							fktop = xjy0;
+							fkright = xjx0 + Number(ddss);
+							fkbottom = xjy1;
+							drawRect(fkleft,fktop,fkright - fkleft,fkbottom - fktop, "#f00" , false);
+							drawLine(pingmux , 0,fkleft + Number((fkright - fkleft)) / 2, fktop ,"#f00");
+						}
+					}
+					else{
+						if(ahjsg == 'tr'){
+							var view = rwjz[3][0] * drx + Number(rwjz[3][1]) * dry + Number(rwjz[3][2]) * drz + Number(rwjz[3][3]);
+							if(view >= 0.01){
+								view = 1 / view;
+								xjx0 = Number(rwjz[0][0]) * drx + Number(rwjz[0][2]) * drz + Number(rwjz[0][3]);
+								xjy0 = Number(rwjz[1][0]) * drx + Number(rwjz [1][1]) * (Number(dry) + 1.8) + Number(rwjz[1][2]) * drz + Number(rwjz[1][3]);
+								xjy1 = Number(rwjz[1][0]) * drx + Number(rwjz [1][1]) * (dry - 0.1) + Number(rwjz[1][2]) * drz + Number(rwjz[1][3]);
+								xjx0 = xjx0 * view;
+								xjy0 = xjy0 * view;
+								xjy1 = xjy1 * view;
+								xjx0 = pingmux + Number(xjx0) * pingmux + 0.5;
+								xjy0 = pingmuy - Number(xjy0) * pingmuy - 0.5;
+								xjy1 = pingmuy - Number(xjy1) * pingmuy - 0.5;
+								xjyjg2 = xjy1 - xjy0;
+								ddss = xjyjg2 / 4;
+								fkleft = xjx0 - ddss;
+								fktop = xjy0;
+								fkright = xjx0 + Number(ddss);
+								fkbottom = xjy1;
+								drawRect(fkleft,fktop,fkright - fkleft,fkbottom - fktop,"#f00", false);
+								drawLine(pingmux, 0,fkleft + Number((fkright - fkleft)) / 2, fktop ,"#f00");
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+// drawLine(0, 0, 100, 100, "#f00");
+// drawCircle(250, 250, 50, "#f00", false);
+// drawRect(100, 100, 50, 50, "#f00", false);
+// drawRoundRect(300, 300, 50, 50, 10, "#f00", false);
+// drawText("Shadow-", 100, 400, 16, "#f00", false);
+
+function shadowInfo(objectInfo) {
+
+}
+
+
+function clearCtx() {
+    ctx.clearRect(0, 0, canvasDom.width, canvasDom.height);
+}
+
+
+function setLineWidth(w) {
+    ctx.lineWidth = w;
+}
+
+
+function drawLine(x1, y1, x2, y2, color) {
+    x1 *= iosScale;
+    y1 *= iosScale;
+    x2 *= iosScale;
+    y2 *= iosScale;
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+function drawCircle(x, y, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+function drawRect(x, y, w, h, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (isFill) {
+        ctx.fillRect(x, y, w, h);
+    } else {
+        ctx.strokeRect(x, y, w, h);
+    }
+    ctx.closePath();
+}
+
+function drawRoundRect(x, y, w, h, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+function drawText(text, x, y, size, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    size *= iosScale;
+
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.font = size + 'px' + fontFamily;
+    if (isFill) {
+        ctx.fillText(text, x, y + size);
+    } else {
+        ctx.strokeText(text, x, y + size);
+    }
+    ctx.closePath();
+};
+
+function readInt(addr) {
+    return Number(h5gg.getValue(addr, "I32"));
+}
+
+function readLong(addr) {
+    return Number(h5gg.getValue(addr, "I64"));
+}
+
+function readFloat(addr) {
+    return Number(h5gg.getValue(addr, "F32"));
+}
+
+function isNull(addr) {
+    return (addr < 0x100000000 || addr > 0x300000000);
+}
+
+
+
+
+
+function vectorDot(lhs, rhs) {
+    return (((lhs.X * rhs.X) + (lhs.Y * rhs.Y)) + (lhs.Z * rhs.Z));
+}
+
+
+    
+
+drawTimer = setInterval(function() {
+    if(window.draw_state)
+    {
+        shadowDraw();
+        
+        if(!window.fpscount) window.fpscount=0;
+        if(!window.fpstime) window.fpstime=performance.now();
+        window.fpscount++;
+        if((performance.now()-window.fpstime)>2000)
+        {
+            window.fps = window.fpscount;
+            window.fpstime = performance.now();
+            window.fpscount = 0;
+        }
+        ctx.textBaseline="top";
+        ctx.textAlign="center";
+        ctx.font='60px "Arial, sans-serif"';
+        ctx.fillStyle="red";
+        if(window.fps) ctx.fillText(window.fps, 80, 30);
+    }
+}, 30);
+    
+</script>
+</html>
