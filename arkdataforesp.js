@@ -9,7 +9,7 @@
 
 //playerCameraManager - 0x660
 //myTeam - 0x29c
-//0xbd0 - 0x10
+//povAddr - 0xbd0 + 0x10
 //team - 0x29C
 
 //Location Addresses
