@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+body {
+    background: transparent;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*菜单*/
+*:not(input, checkbox, textarea) {
+    /*禁止文本选择*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Non-prefixed version, currently */
+}
+
+.popup_container {
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    top: 0;
+}
+
+#H5AlertView {
+    width: 220px;
+    height: 300px;
+    position: absolute;
+    left: -110px;
+    top: 150px;
+    text-align: center;
+    zoom: 0.8;
+}
+
+#title-text {
+    padding-top: 0px;
+    font-size: 18px;
+    color: #494949;
+}
+
+#info-text {
+    padding: 10px;
+    color: #494949;
+}
+
+#content-view {
+    z-index: 0;
+    background: #fff;
+    position: relative;
+    top: 0px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    color: #fff;
+    background-color: #23B574;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    padding: 0 8px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+button:active {
+    background-color: #007E40;
+    transform: translateY(2px);
+}
+</style>
+</head>
+
+<body>
+<!--悬浮菜单-->
+<div class="popup_container">
+<div id="H5AlertView">
+<script>
+function draw(fps) {
+    window.draw_state = 1;
+    alert("Activate");
+}
+
+function unDraw() {
+    clearCtx();
+    window.draw_state = 0;
+    setTimeout(function(){alert("Deactivate")},100);
+}
+
+function hideMenu() {
+    var menu = document.querySelector("#H5AlertView");
+    menu.style.display = 'none';
+
+    //隐藏菜单之后, 设置触控穿透悬浮窗口
+    setWindowTouch(false);
+}
+</script>
+<div id="content-view">
+<div id="title-text">H5+JS</div>
+<div id="info-text">ESP</div>
+<div>
+    <button onclick="draw()">Draw</button>
+    <button onclick="unDraw()">UnDraw</button>
+    <button onclick="hideMenu()">Close</button>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script>
+//脚本放在最后面, body加载完之后再执行
+
+//激活webkit的button:active
+document.body.addEventListener('touchstart', function () {});
+    
+//设置不可拖动
+setWindowDrag(0, 0, 0, 0);
+
+
+
+//设置按照屏幕像素尺寸绘图(高清模式)
+var iosScale = window.devicePixelRatio;
+var sWidth = 0; //屏幕宽
+var sHeight = 0; //屏幕高
+
+//创建画布
+var canvasDom = document.createElement("canvas");
+document.body.appendChild(canvasDom);
+canvasDom.style.height = "100%";
+canvasDom.style.width = "100%";
+
+var layout = function()
+{
+    //window.orientation是设备握持方向, 不是屏幕显示方向
+    if(window.lastorientation==window.orientation) return;
+    window.lastorientation=window.orientation;
+    
+    //window.screen中的宽高不会随着屏幕旋转更新(只会在初始化的时候固定)
+    if(Math.abs(window.orientation)==90) {
+        //横屏模式
+        setWindowRect(0,0,window.screen.height,window.screen.width);
+        canvasDom.width = window.screen.height * iosScale;
+        canvasDom.height = window.screen.width * iosScale;
+        sWidth = window.screen.height;
+        sHeight = window.screen.width;
+    } else {
+        //竖屏模式
+        setWindowRect(0,0,window.screen.width,window.screen.height);
+        canvasDom.height = window.screen.height * iosScale;
+        canvasDom.width = window.screen.width * iosScale;
+        sWidth = window.screen.width;
+        sHeight = window.screen.height;
+    }
+}
+
+layout(); //设置旋转屏幕时自动调整布局和画布
+window.addEventListener("orientationchange", layout, false);
+
+//*设置自定义的悬浮按钮图标点击动作
+setButtonAction(function(){
+        
+     var menu = document.querySelector("#H5AlertView");
+     if(menu.style.display=='none') {
+         menu.style.display='block';
+         //隐藏菜单之后, 设置触控穿透悬浮窗口
+         setWindowTouch(true);
+     } else {
+         menu.style.display='none';
+         //显示菜单之后, 设置触控不可穿透悬浮窗口
+         setWindowTouch(false);
+     }
+});//*/
+
+
+var ctx = canvasDom.getContext('2d');
+setLineWidth(iosScale);
+var fontFamily = " Arial";
+
+var cacheTimer = null; //数据缓存计时器，减少遍历次数，提高性能
+var drawTimer = null; //绘图计时器，控制帧率
+var actorCache = []; //对象地址缓存
+
+var baseAddr = Number(h5gg.getRangesList(0)[0].start); //aslr只读一次，能减少🐔🎱那么一点性能消耗
+var GWorld = 0; //世界全局变量，公用
+
+function drawCache() {
+    if (isNull(GWorld)) return;
+    var Level = readLong(GWorld + 0x58);
+    var ActorArray = readLong(Level + 0xA0);
+    var ActorCount = readInt(Level + 0xA8);
+
+    var tempArr = [];
+    for (var i = 0; i < ActorCount; i++) {
+        var actor = readLong(ActorArray + i * 8);
+        if (isNull(actor)) continue;
+        var id = readFloat(actor + 0xc3c);
+        if (id != 2200) continue;
+         tempArr.push(actor);
+    }
+    actorCache = tempArr;
+}
+    
+function shadowDraw() {
+    clearCtx();
+
+    GWorld = readLong(baseAddr + 0x44e9648);
+    if (isNull(GWorld)) return;
+
+    //获取自己
+    var OwningGameInstance = readLong(GWorld + 0x1a8);
+    var LocalPlayers = readLong(OwningGameInstance + 0x38);
+    var localPlayerController = readLong(LocalPlayers + 0x0);
+    var mySelf = readLong(localPlayerController + 0x30);
+
+    if (isNull(mySelf)) return;
+    var myTeam = readInt(mySelf + 0x29c);
+
+    var playerCameraManager = readLong(mySelf + 0x660);
+    if (isNull(playerCameraManager)) return;
+    var povAddr = (playerCameraManager + 0xbd0 + 0x10);
+    var camViewInfo = {
+        Location: {
+            X: readFloat(povAddr),
+            Y: readFloat(povAddr + 4),
+            Z: readFloat(povAddr + 4 + 4)
+        },
+        Rotation: {
+            Pitch: readFloat(povAddr + 0xc),
+            Yaw: readFloat(povAddr + 0xc + 4),
+            Roll: readFloat(povAddr + 0xc + 4 + 4)
+        },
+        FOV: readFloat(povAddr + 0x28)
+    }
+
+    //一帧只计算一次，减少性能消耗
+    var tempMatrix = RotatorToMatrix(camViewInfo.Rotation);
+
+    var playerCout = 0;
+    for (var i = 0; i < actorCache.length; i++) {
+        var actor = actorCache[i];
+        if (mySelf == actor) continue;
+
+        var team = readInt(actor + 0x29C);
+
+        var hp = 100;
+
+        var rootComponent = readLong(actor + 0x2c8);
+        if (isNull(rootComponent)) continue;
+        var worldPos = {
+            X: readFloat(rootComponent + 0x290),
+            Y: readFloat(rootComponent + 0x290 + 4),
+            Z: readFloat(rootComponent + 0x290 + 4 + 4)
+        }
+
+        var distX = (worldPos.X - camViewInfo.Location.X) / 100;
+        var distY = (worldPos.Y - camViewInfo.Location.Y) / 100;
+        var distance = (distX * distX) + (distY * distY);
+        var distZ = (worldPos.Z - camViewInfo.Location.Z) / 100;
+        distance = Math.ceil(Math.sqrt((distZ * distZ) + distance));
+
+        var zb1 = {
+            X: worldPos.X,
+            Y: worldPos.Y,
+            Z: worldPos.Z + 80.0
+        }
+        var zb2 = {
+            X: worldPos.X,
+            Y: worldPos.Y,
+            Z: worldPos.Z - 80.0
+        }
+        var fkzb1 = world2Screen(zb1, camViewInfo, tempMatrix);
+        var fkzb2 = world2Screen(zb2, camViewInfo, tempMatrix);
+        var fkgao = fkzb2.Y - fkzb1.Y;
+        var fkkuan = fkgao / 2;
+
+        var name = "Entity";
+        
+        var actorInfo = {
+            x: fkzb1.X,
+            y: fkzb1.Y,
+            w: fkkuan,
+            h: fkgao,
+            hp: hp,
+            team: team,
+            name: name,
+            dis: distance,
+        };
+        shadowInfo(actorInfo);
+
+        playerCout++;
+        // }
+    }
+
+    //计数
+    drawText(playerCout, sWidth / 2, 10, 32, "#f00", true);
+
+}
+
+// drawLine(0, 0, 100, 100, "#f00");
+// drawCircle(250, 250, 50, "#f00", false);
+// drawRect(100, 100, 50, 50, "#f00", false);
+// drawRoundRect(300, 300, 50, 50, 10, "#f00", false);
+// drawText("Shadow-", 100, 400, 16, "#f00", false);
+
+//封装数据绘制函数
+function shadowInfo(objectInfo) {
+    var color = "#F00";
+
+    //射线
+    //drawLine(sWidth / 2, 50, objectInfo.x, objectInfo.y - 45, color);
+    
+    //超出屏幕只绘制射线
+    if(objectInfo.x<0 || objectInfo.y<0 || objectInfo.x>sWidth || objectInfo.y>sHeight) return;
+    
+    //方框
+    drawRect(objectInfo.x - objectInfo.w / 2, objectInfo.y, objectInfo.w, objectInfo.h, color,
+        false); //绘制方框
+
+    //距离
+    drawText("[" + objectInfo.dis + "m]", objectInfo.x, objectInfo.y - 40, 10, "#333", false); //利用空心文字描边
+    drawText("[" + objectInfo.dis + "m]", objectInfo.x, objectInfo.y - 40, 10, color, true);
+
+    //信息
+    drawText("" + objectInfo.team + "  " + objectInfo.name, objectInfo.x, objectInfo.y - 25, 10, "#333",
+        false); //利用空心文字描边
+    drawText("" + objectInfo.team + "  " + objectInfo.name, objectInfo.x, objectInfo.y - 25, 10, color,
+        true);
+
+
+    //血条
+    drawRoundRect(objectInfo.x - 25, objectInfo.y - 10, 50, 4, 2, "#333", false); //利用空心矩形描边
+    drawRoundRect(objectInfo.x - 25, objectInfo.y - 10, Math.ceil(objectInfo.hp / 2), 4, 2, color, true);
+}
+
+// ********************* 绘图相关 *********************
+
+//清空画布
+function clearCtx() {
+    ctx.clearRect(0, 0, canvasDom.width, canvasDom.height);
+}
+
+//设置线宽
+function setLineWidth(w) {
+    ctx.lineWidth = w;
+}
+
+//绘制线条，起始点xy，终点xy，颜色
+function drawLine(x1, y1, x2, y2, color) {
+    x1 *= iosScale;
+    y1 *= iosScale;
+    x2 *= iosScale;
+    y2 *= iosScale;
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+//绘制圆形 中心点xy，圆形半径，颜色，是否填充圆
+function drawCircle(x, y, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+//绘制矩形 起点xy，矩形宽高，颜色，是否填充矩形
+function drawRect(x, y, w, h, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (isFill) {
+        ctx.fillRect(x, y, w, h);
+    } else {
+        ctx.strokeRect(x, y, w, h);
+    }
+    ctx.closePath();
+}
+
+//绘制圆角矩形，起点xy，矩形宽高，圆角半径，颜色，是否填充矩形
+function drawRoundRect(x, y, w, h, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+//绘制文字，文字内容，起点xy，文字大小，颜色，是否填充文字
+function drawText(text, x, y, size, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    size *= iosScale;
+
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.font = size + 'px' + fontFamily;
+    if (isFill) {
+        ctx.fillText(text, x, y + size);
+    } else {
+        ctx.strokeText(text, x, y + size);
+    }
+    ctx.closePath();
+};
+
+// ********************* 内存相关 *********************
+function readInt(addr) {
+    return Number(h5gg.getValue(addr, "I32"));
+}
+
+function readLong(addr) {
+    return Number(h5gg.getValue(addr, "I64"));
+}
+
+function readFloat(addr) {
+    return Number(h5gg.getValue(addr, "F32"));
+}
+
+function isNull(addr) {
+    return (addr < 0x100000000 || addr > 0x300000000);
+}
+
+
+
+// ********************* UE4相关 *********************
+function RotatorToMatrix(rotation) {
+    var radPitch = rotation.Pitch * (Math.PI / 180.0);
+    var radYaw = rotation.Yaw * (Math.PI / 180.0);
+    var radRoll = rotation.Roll * (Math.PI / 180.0);
+
+    var SP = Math.sin(radPitch);
+    var CP = Math.cos(radPitch);
+    var SY = Math.sin(radYaw);
+    var CY = Math.cos(radYaw);
+    var SR = Math.sin(radRoll);
+    var CR = Math.cos(radRoll);
+
+    var matrix = new Array(16).fill(0);
+
+    matrix[0] = (CP * CY);
+    matrix[1] = (CP * SY);
+    matrix[2] = (SP);
+    matrix[3] = 0;
+
+    matrix[4] = (SR * SP * CY - CR * SY);
+    matrix[5] = (SR * SP * SY + CR * CY);
+    matrix[6] = (-SR * CP);
+    matrix[7] = 0;
+
+    matrix[8] = (-(CR * SP * CY + SR * SY));
+    matrix[9] = (CY * SR - CR * SP * SY);
+    matrix[10] = (CR * CP);
+    matrix[11] = 0;
+
+    matrix[12] = 0;
+    matrix[13] = 0;
+    matrix[14] = 0;
+    matrix[15] = 1;
+
+    return matrix;
+}
+
+function vectorDot(lhs, rhs) {
+    return (((lhs.X * rhs.X) + (lhs.Y * rhs.Y)) + (lhs.Z * rhs.Z));
+}
+
+function world2Screen(worldLocation, camViewInfo, tempMatrix) {
+    // var tempMatrix = RotatorToMatrix(camViewInfo.Rotation);
+
+    var vAxisX = {
+        X: tempMatrix[0],
+        Y: tempMatrix[1],
+        Z: tempMatrix[2]
+    };
+    var vAxisY = {
+        X: tempMatrix[4],
+        Y: tempMatrix[5],
+        Z: tempMatrix[6]
+    };
+    var vAxisZ = {
+        X: tempMatrix[8],
+        Y: tempMatrix[9],
+        Z: tempMatrix[10]
+    };
+
+    var vDelta = {
+        X: worldLocation.X - camViewInfo.Location.X,
+        Y: worldLocation.Y - camViewInfo.Location.Y,
+        Z: worldLocation.Z - camViewInfo.Location.Z
+    };
+
+    var vTransformed = {
+        X: vectorDot(vDelta, vAxisY),
+        Y: vectorDot(vDelta, vAxisZ),
+        Z: vectorDot(vDelta, vAxisX)
+    };
+
+    if (vTransformed.Z < 1.0) {
+        vTransformed.Z = 1.0;
+    }
+
+    var fov = camViewInfo.FOV;
+    var screenCenterX = (sWidth / 2.0);
+    var screenCenterY = (sHeight / 2.0);
+
+    var re = {
+        X: (screenCenterX + vTransformed.X * (screenCenterX / Math.tan(fov * (Math.PI / 360.0))) /
+            vTransformed
+            .Z),
+        Y: (screenCenterY - vTransformed.Y * (screenCenterX / Math.tan(fov * (Math.PI / 360.0))) /
+            vTransformed
+            .Z)
+    };
+
+    return re;
+}
+    
+    
+cacheTimer = setInterval(function() {
+    drawCache();
+}, 1000);//一秒缓存一次
+drawTimer = setInterval(function() {
+    if(window.draw_state)
+    {
+        shadowDraw();
+        
+        //计算FPS
+        if(!window.fpscount) window.fpscount=0;
+        if(!window.fpstime) window.fpstime=performance.now();
+        window.fpscount++;
+        if((performance.now()-window.fpstime)>2000)
+        {
+            window.fps = window.fpscount;
+            window.fpstime = performance.now();
+            window.fpscount = 0;
+        }
+        ctx.textBaseline="top";
+        ctx.textAlign="center";
+        ctx.font='60px "Arial, sans-serif"';
+        ctx.fillStyle="red";
+        if(window.fps) ctx.fillText(window.fps, 80, 30);
+    }
+}, 30);
+    
+</script>
+</html>
+
