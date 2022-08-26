@@ -1,4 +1,4 @@
-function fps(inputq) {
+function fps(input) {
 if (typeof addr12 === 'undefined') {
   h5gg.clearResults();
  
@@ -11,7 +11,7 @@ count12 = h5gg.getResultsCount();
                             r12 = h5gg.getResults(count12);
                             for (var i = 0; i < count12; i++) {
                                 addr12 = r12[i].address;
-                              h5gg.setValue(addr12, inputq.value, 'F32');
+                              h5gg.setValue(addr12, input.value, 'F32');
   h5gg.clearResults()
                             }
                      }
@@ -19,7 +19,7 @@ count12 = h5gg.getResultsCount();
            
                             
                         
-                                h5gg.setValue(addr12, inputq.value, 'F32');
+                                h5gg.setValue(addr12, input.value, 'F32');
                                 
                             }
       
