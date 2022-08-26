@@ -1,5 +1,4 @@
         function fnBigBody(input) {
-            document.getElementById("valBigBody").innerHTML = input.value;
 
             if (typeof addr49 === "undefined") {
                 h5gg.clearResults();
@@ -1613,14 +1612,22 @@ if (typeof addr20 === 'undefined') {
   			    target.innerHTML = elem.value;
   			  }
   			}
-      	elem.addEventListener('input', rangeValue(elem, target));       			
+      			elem.addEventListener('input', rangeValue(elem, target));       			
 
-        var elem = document.getElementById('slider9');
-  			var target = document.getElementById('numvalue9');
-  			var rangeValue = function (elem, target) {
-  			  return function(evt){
-  			    target.innerHTML = elem.value;
-  			  }
-  			}
-      	elem.addEventListener('input', rangeValue(elem, target));       			
+        		var elem = document.getElementById('slider9');
+  				var target = document.getElementById('numvalue9');
+  				var rangeValue = function (elem, target) {
+  				  return function(evt){
+  				    target.innerHTML = elem.value;
+  				  }
+  				}
+     	 		elem.addEventListener('input', rangeValue(elem, target));       			
+  		        		var elem = document.getElementById('slider10');
+  				var target = document.getElementById('numvalue10');
+  				var rangeValue = function (elem, target) {
+  				  return function(evt){
+  				    target.innerHTML = elem.value;
+  				  }
+  				}
+     	 		elem.addEventListener('input', rangeValue(elem, target));       			
   		
