@@ -1,3 +1,33 @@
+        function fnBigBody(input) {
+            document.getElementById("valBigBody").innerHTML = input.value;
+
+            if (typeof addr49 === "undefined") {
+                h5gg.clearResults();
+                h5gg.searchNumber(
+                    "1.613775153007164e-314",
+                    "F64",
+                    "0x00000000",
+                    "0x200000000"
+                );
+                h5gg.searchNearby("1", "F32", "0x100");
+                h5gg.searchNearby("1", "F32", "0x100");
+                h5gg.searchNumber("1", "F32", "0x00000000", "0x200000000");
+                h5gg.getResults("100", "0", "F32");
+
+                count49 = h5gg.getResultsCount();
+                r49 = h5gg.getResults(count49);
+                for (var i = 0; i < count49; i++) {
+                    addr49 = r49[i].address;
+                    h5gg.setValue(addr49, input.value * 1, "F32");
+                    h5gg.clearResults();
+                }
+            } else {
+                for (var i = 0; i < count49; i++) {
+                    addr49 = r49[i].address;
+                    h5gg.setValue(addr49, input.value * 1, "F32");
+                }
+            }
+        }
 function fps(input) {
 if (typeof addr12 === 'undefined') {
   h5gg.clearResults();
