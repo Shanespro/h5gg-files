@@ -1,4 +1,175 @@
-<!DOCTYPE html>
+<!        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+                "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            color: white;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #page1,
+        #page2,
+        #page3,
+        #page4,
+        #page5 {
+            display: none;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 5px;
+        }
+
+        .nav-left {
+            left: 5px;
+        }
+
+        .nav-right {
+            right: 5px;
+        }
+
+        #app {
+            position: absolute;
+            top: 10%;
+            left: calc(50% - 180px);
+            height: 256px;
+            width: 360px;
+            background-color: #222;
+            border: 4px solid rgba(89, 99, 204, 1);
+            border-radius: 6px;
+            zoom: 0.8;
+        }
+
+        .header {
+            font-size: 20px;
+            border-bottom: 3px solid rgba(89, 99, 204, 1);
+            padding: 5px 0 5px 0;
+            height: 46px;
+        }
+
+        .nav {
+            overflow-y: scroll;
+            height: 200px;
+        }
+
+        .nav li {
+            margin: 10px;
+            border: 3px solid rgba(89, 99, 204, 1);
+            border-radius: 10px;
+        }
+
+        .page {
+            margin-block: 5px;
+            padding: 10px;
+            height: 196px;
+            overflow-x: hidden;
+        }
+
+        .page div {
+            padding: 6px;
+        }
+
+        .page span {
+            padding: 2px;
+        }
+
+        .title {
+            font-size: 20px;
+        }
+
+        /** ASSETS **/
+        .range {
+            width: 256px;
+            height: 18px;
+            -webkit-appearance: none;
+            background: #111;
+            outline: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px #000000;
+        }
+        .range::-webkit-slider-thumb {
+            /* rgba(89, 99, 204, 1); */
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: black;
+            cursor: pointer;
+            border: 5px solid rgba(89, 99, 204, 1);;
+            box-shadow: -407px 0 0 400px transparent;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #111;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: rgba(89, 99, 204, 1);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px rgba(89, 99, 204, 1);
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }   DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
