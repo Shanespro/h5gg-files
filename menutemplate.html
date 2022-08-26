@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tech Tool</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./api.js" defer></script>
+    <script src="https://kit.fontawesome.com/4cf5df4605.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- DRAW -->
+    <canvas id="canvas" width="100%" height="100%" style="width: 100%; height: 100%"></canvas>
+
+    <!-- MENU -->
+    <div id="app">
+        <div class="header">
+            <h3>Tech Tool</h3>
+
+            <div class="nav-btn nav-right move" onclick="changeTab(0)">
+                <i class="fa-solid fa-bars-staggered fa-lg"></i>
+            </div>
+
+            <div class="nav-btn nav-left back" id="menu_move">
+                <i class="fa-solid fa-arrows-up-down-left-right fa-lg"></i>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav" id="nav">
+                <ul>
+                    <li>
+                        <div onclick="changeTab(1)">
+                            <div class="bar"></div>
+                            <h4>Main Menu</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="changeTab(2)">
+                            <div class="bar"></div>
+                            <h4>Aimbot Menu</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="changeTab(3)">
+                            <div class="bar"></div>
+                            <h4>Draw Menu</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="changeTab(4)">
+                            <div class="bar"></div>
+                            <h4>Buff Menu</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="changeTab(5)">
+                            <div class="bar"></div>
+                            <h4>Test Menu</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="changeTab(6)">
+                            <div class="bar"></div>
+                            <h4>Credits</h4>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div onclick="menu_close()">
+                            <div class="bar"></div>
+
+                            <h4>
+                                <i class="fa-solid fa-xmark"></i> Close Menu
+                                <i class="fa-solid fa-xmark"></i>
+                            </h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="page1" class="page">
+                <div>
+                    <span>Global Speed:</span>
+                    <span id="valSpeedG">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="12" step="0.1" onChange="fnSpeedG(this)" />
+                </div>
+
+                <div>
+                    <span>Player Speed:</span>
+                    <span id="valSpeedP">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="6" step="0.1" onChange="fnSpeedP(this)" />
+                </div>
+
+                <div>
+                    <span>Zoom Out:</span>
+                    <span id="valFOVW">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="100" step="0.1" onChange="fnFOVW(this)" />
+                </div>
+
+                <div>
+                    <span>FOV:</span>
+                    <span id="valFOV">25</span><span>x</span>
+                    <input class="range" type="range" value="1" min="25" max="300" step="0.1" onChange="fnFOV(this)" />
+                </div>
+            </div>
+
+            <div id="page2" class="page">
+                <div>
+                    <span>Big Head:</span>
+                    <span id="valBigHead">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="50" step="0.1"
+                        onChange="fnBigHead(this)" />
+                </div>
+
+                <div>
+                    <span>Big Body:</span>
+                    <span id="valBigBody">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="8" step="0.1" onChange="fnBigBody(this)" />
+                </div>
+            </div>
+
+            <div id="page3" class="page">
+                <div>
+                    <span>Show FPS: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnShowFPS(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="title">Antennas</div>
+                <div>
+                    <span>Player: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnAntennaPlayer(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>Gold Chain: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnAntennaGC(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div>
+                    <span>Snail: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnAntennaSnail(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="page4" class="page">
+                <div class="title">Vision</div>
+
+                <div>
+                    <span>Night Vision:</span>
+                    <span id="valNightVision">1</span><span>x</span>
+                    <input class="range" type="range" value="1" min="1" max="10" step="1"
+                        onChange="fnNightVision(this.value)" />
+                </div>
+
+                <div>
+                    <span>Dungeon: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnVisDungeon(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>Underwater: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnVisUW(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div>
+                    <span>Ground: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnVisGround(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>X-Ray: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnVisWorld(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="title">SPAM</div>
+                <div>
+                    <span>Rocket Turret: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnSpamRT()" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="title">SPAM Bullet</div>
+
+                <div>
+                    <span>Simple Pistol: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnSpamPistol(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>Sniper: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnSpamSniper(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div>
+                    <span>Shotgun: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnSpamShotgun(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>A-Rifle: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnSpamAk(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="title">Colors</div>
+                <div>
+                    <span>Hair: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnColorHair(this)" />
+                        <span class="slider round"></span>
+                    </label>
+
+                    <span>Body: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnColorBody(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="page5" class="page">
+                <div>
+                    <span>UW Shoot: </span>
+                    <label class="switch">
+                        <input type="checkbox" onclick="fnUwShoot(this)" />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="page6" class="page">
+                Coded by: AydinTheFirst
+                <br />
+                ( https://aydndev.xyz )
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tabs = ["nav", "page1", "page2", "page3", "page4", "page5", "page6"];
+        function changeTab(value) {
+            tabs.forEach((a, i) => {
+                if (i === value) {
+                    document.getElementById(a).style.display = "block";
+                } else {
+                    document.getElementById(a).style.display = "none";
+                }
+            });
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+                "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            color: white;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #page1,
+        #page2,
+        #page3,
+        #page4,
+        #page5,
+        #page6 {
+            display: none;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 5px;
+        }
+
+        .nav-left {
+            left: 5px;
+        }
+
+        .nav-right {
+            right: 5px;
+        }
+
+        #app {
+            position: absolute;
+            top: 10%;
+            left: calc(50% - 180px);
+            height: 256px;
+            width: 360px;
+            background-color: #222;
+            border: 4px solid rgba(89, 99, 204, 1);
+            border-radius: 6px;
+            zoom: 0.8;
+        }
+
+        .header {
+            font-size: 20px;
+            border-bottom: 3px solid rgba(89, 99, 204, 1);
+            padding: 5px 0 5px 0;
+            height: 46px;
+        }
+
+        .nav {
+            overflow-y: scroll;
+            height: 200px;
+        }
+
+        .nav li {
+            margin: 10px;
+            border: 3px solid rgba(89, 99, 204, 1);
+            border-radius: 10px;
+        }
+
+        .page {
+            margin-block: 5px;
+            padding: 10px;
+            height: 196px;
+            overflow-x: hidden;
+        }
+
+        .page div {
+            padding: 6px;
+        }
+
+        .page span {
+            padding: 2px;
+        }
+
+        .title {
+            font-size: 20px;
+        }
+
+        /** ASSETS **/
+        .range {
+            width: 256px;
+            height: 18px;
+            -webkit-appearance: none;
+            background: #111;
+            outline: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+        }
+
+        .range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(89, 99, 204, 1);
+            cursor: pointer;
+            border: 5px solid #333;
+            box-shadow: -407px 0 0 400px rgba(89, 99, 204, 1);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #111;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: rgba(89, 99, 204, 1);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px rgba(89, 99, 204, 1);
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</body>
+
+</html>
