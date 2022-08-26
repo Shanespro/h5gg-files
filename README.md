@@ -1,2 +1,3 @@
 # h5gg-files
-any files here are public or made by me not leaking anything
+moving on from h5gg things to jailbreak hacks so im leaking h5gg files here
+discord: 我的用戶名是什麼#6213
