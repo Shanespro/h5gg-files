@@ -280,6 +280,9 @@ function shadowDraw() {
         var distance = (distX * distX) + (distY * distY);
         var distZ = (worldPos.Z - camViewInfo.Location.Z) / 100;
         distance = Math.ceil(Math.sqrt((distZ * distZ) + distance));
+        if (distance>200) continue;
+        if (distance<5) continue;
+
 
         var zb1 = {
             X: worldPos.X,
